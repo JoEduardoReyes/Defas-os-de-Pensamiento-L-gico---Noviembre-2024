@@ -62,3 +62,21 @@ h1 {
 	color: black;
 	border-radius: 10px;
 }
+
+.caja .advinar {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.caja .advinar label {
+	text-align: center;
+	margin: 10px 0;
+}
+
+.caja .advinar input {
+	padding: 10px;
+	color: black;
+	border-radius: 10px;
+}
