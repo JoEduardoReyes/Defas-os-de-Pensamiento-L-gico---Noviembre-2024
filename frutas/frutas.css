@@ -69,6 +69,12 @@ h1 {
 	justify-content: center;
 	align-items: center;
 }
+
+/* frutas.css */
+.caja .advinar {
+	display: none; /* Ocultar la sección de adivinanza al inicio */
+}
+
 .caja .advinar button {
 	padding: 10px;
 	color: black;

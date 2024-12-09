@@ -5,7 +5,6 @@ const frutas = ["🍎 Manzanas", "🍐 Peras", "🍊 Naranjas"];
 
 // Función para asignar etiquetas y contenido a las cajas
 function asignarFrutas() {
-	// Crear copias de los arrays para trabajar
 	const etiquetas = [...frutas];
 	const contenido = [...frutas];
 
@@ -16,7 +15,6 @@ function asignarFrutas() {
 	// Evitar coincidencias entre etiquetas y contenido
 	for (let i = 0; i < etiquetas.length; i++) {
 		if (etiquetas[i] === contenido[i]) {
-			// Si coinciden, intercambiar con otra posición
 			const temp = contenido[i];
 			contenido[i] = contenido[(i + 1) % contenido.length];
 			contenido[(i + 1) % contenido.length] = temp;
@@ -31,6 +29,28 @@ function asignarFrutas() {
 		etiquetaElemento.textContent = etiquetas[i];
 		frutaElemento.textContent = contenido[i];
 		frutaElemento.style.display = "none"; // Ocultar las frutas inicialmente
+
+		// Añadir el evento para abrir cada caja
+		document
+			.getElementById(`abrir-caja-${i + 1}`)
+			.addEventListener("click", () => abrirCaja(i + 1));
+	}
+}
+
+// Función para abrir una caja
+function abrirCaja(numeroCaja) {
+	// Mostrar fruta y ocultar botón de la caja seleccionada
+	document.getElementById(`fruta-caja-${numeroCaja}`).style.display = "block";
+	document.getElementById(`abrir-caja-${numeroCaja}`).style.display = "none";
+
+	// Ocultar botones de abrir caja en las otras cajas y mostrar adivinanzas
+	for (let i = 1; i <= 3; i++) {
+		if (i !== numeroCaja) {
+			document.getElementById(`abrir-caja-${i}`).style.display = "none";
+			document.getElementById(`adivinar-${i}`).style.display = "flex";
+		} else {
+			document.getElementById(`adivinar-${i}`).style.display = "none";
+		}
 	}
 }
 
