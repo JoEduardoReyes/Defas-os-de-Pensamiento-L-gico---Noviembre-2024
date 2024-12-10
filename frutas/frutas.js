@@ -3,6 +3,7 @@
 // Array de frutas posibles
 const frutas = ["🍎 Manzanas", "🍐 Peras", "🍊 Naranjas"];
 let contenido = []; // Para almacenar frutas asignadas
+let respuestas = {}; // Para almacenar respuestas del jugador
 
 // Función para asignar etiquetas y contenido a las cajas
 function asignarFrutas() {
@@ -42,13 +43,11 @@ function abrirCaja(numeroCaja) {
 	document.getElementById(`fruta-caja-${numeroCaja}`).style.display = "block";
 	document.getElementById(`abrir-caja-${numeroCaja}`).style.display = "none";
 
-	// Ocultar botones de abrir caja y mostrar adivinanzas en otras cajas
+	// Mostrar adivinanzas en otras cajas
 	for (let i = 1; i <= 3; i++) {
 		if (i !== numeroCaja) {
 			document.getElementById(`abrir-caja-${i}`).style.display = "none";
 			document.getElementById(`adivinar-${i}`).style.display = "flex";
-
-			// Agregar eventos a los botones de adivinar
 			asignarEventosAdivinar(i);
 		} else {
 			document.getElementById(`adivinar-${i}`).style.display = "none";
@@ -56,17 +55,45 @@ function abrirCaja(numeroCaja) {
 	}
 }
 
-// Función para agregar eventos a los botones de adivinar
+// Función para asignar eventos a botones de adivinanza
 function asignarEventosAdivinar(numeroCaja) {
 	const botones = document.querySelectorAll(`#adivinar-${numeroCaja} button`);
 	botones.forEach((boton) => {
 		boton.addEventListener("click", () => {
-			// Ocultar botones no seleccionados
+			// Guardar respuesta del jugador
+			respuestas[`caja-${numeroCaja}`] = boton.textContent;
+
+			// Mostrar solo la fruta seleccionada
 			botones.forEach((btn) => {
 				if (btn !== boton) btn.style.display = "none";
 			});
+
+			// Comprobar si ambas respuestas están seleccionadas
+			if (Object.keys(respuestas).length === 2) {
+				verificarRespuestas();
+			}
 		});
 	});
+}
+
+// Función para verificar respuestas
+function verificarRespuestas() {
+	let aciertos = 0;
+	for (let i = 1; i <= 3; i++) {
+		if (respuestas[`caja-${i}`] === contenido[i - 1]) {
+			aciertos++;
+		}
+	}
+
+	// Mostrar resultado y recargar la página
+	if (aciertos === 2) {
+		alert("¡Felicidades! Adivinaste correctamente ambas cajas.");
+	} else {
+		alert("¡Incorrecto! Vuelve a intentarlo.");
+	}
+
+	// Recargar la página
+	location.reload();
 }
 
 // Ejecutar la función al cargar la página

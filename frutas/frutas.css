@@ -80,3 +80,18 @@ h1 {
 	color: black;
 	border-radius: 10px;
 }
+
+#resultado-container {
+	margin-top: 80px;
+}
+
+.hidden {
+	display: none;
+}
+
+#recargar-button {
+	font-size: 24px;
+	color: black;
+	padding: 12px 24px;
+	border-radius: 15px;
+}
