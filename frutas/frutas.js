@@ -3,6 +3,7 @@
 // Array de frutas posibles
 const frutas = ["🍎 Manzanas", "🍐 Peras", "🍊 Naranjas"];
 let contenido = []; // Para almacenar frutas asignadas
+let cajasAbiertas = []; // Para registrar las cajas abiertas
 let respuestas = {}; // Para almacenar respuestas del jugador
 
 // Función para asignar etiquetas y contenido a las cajas
@@ -39,9 +40,9 @@ function asignarFrutas() {
 
 // Función para abrir una caja
 function abrirCaja(numeroCaja) {
-	// Mostrar fruta y ocultar botón de abrir caja
 	document.getElementById(`fruta-caja-${numeroCaja}`).style.display = "block";
 	document.getElementById(`abrir-caja-${numeroCaja}`).style.display = "none";
+	cajasAbiertas.push(numeroCaja);
 
 	// Mostrar adivinanzas en otras cajas
 	for (let i = 1; i <= 3; i++) {
@@ -79,21 +80,40 @@ function asignarEventosAdivinar(numeroCaja) {
 // Función para verificar respuestas
 function verificarRespuestas() {
 	let aciertos = 0;
+
+	// Verificar aciertos
 	for (let i = 1; i <= 3; i++) {
 		if (respuestas[`caja-${i}`] === contenido[i - 1]) {
 			aciertos++;
 		}
 	}
 
-	// Mostrar resultado y recargar la página
+	const resultadoAnuncio = document.getElementById("resultado-anuncio");
+	const resultadoContainer = document.getElementById("resultado-container");
+	const recargarButton = document.getElementById("recargar-button");
+
+	// Mostrar el resultado
 	if (aciertos === 2) {
-		alert("¡Felicidades! Adivinaste correctamente ambas cajas.");
+		resultadoAnuncio.textContent =
+			"¡Felicidades! Adivinaste correctamente ambas cajas. 🎉";
 	} else {
-		alert("¡Incorrecto! Vuelve a intentarlo.");
+		// Encontrar cajas no seleccionadas
+		const cajasNoSeleccionadas = [1, 2, 3].filter(
+			(num) => !cajasAbiertas.includes(num)
+		);
+
+		const contenidoReal = cajasNoSeleccionadas
+			.map((num) => `Caja ${num}: ${contenido[num - 1]}`)
+			.join(" | ");
+
+		resultadoAnuncio.textContent = `¡Incorrecto! Vuelve a intentarlo. 😞 Contenido real: ${contenidoReal}`;
 	}
 
-	// Recargar la página
-	location.reload();
+	// Mostrar el contenedor del resultado
+	resultadoContainer.classList.remove("hidden");
+
+	// Botón de recarga manual
+	recargarButton.addEventListener("click", () => location.reload());
 }
 
 // Ejecutar la función al cargar la página

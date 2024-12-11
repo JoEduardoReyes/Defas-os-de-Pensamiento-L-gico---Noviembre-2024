@@ -10,9 +10,7 @@
 }
 
 body {
-	background-image: url(/frutas/assets/pexels-street-donkey-2067243-3705687.jpg);
-	background-position: center;
-	background-size: cover;
+	background-color: rgb(196, 116, 42);
 	width: 100%;
 	max-width: 1310px;
 	min-width: 210px;
@@ -83,6 +81,7 @@ h1 {
 
 #resultado-container {
 	margin-top: 80px;
+	text-align: center;
 }
 
 .hidden {
@@ -92,6 +91,7 @@ h1 {
 #recargar-button {
 	font-size: 24px;
 	color: black;
+	margin-top: 20px;
 	padding: 12px 24px;
 	border-radius: 15px;
 }
